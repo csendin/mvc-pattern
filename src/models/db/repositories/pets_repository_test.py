@@ -13,8 +13,8 @@ class MockConnection:
                 (
                     [mock.call.query(PetsTable)],  # query
                     [
-                        PetsTable(name="dog", type="dog"),
-                        PetsTable(name="cat", type="cat"),
+                        PetsTable(name='dog', type='dog'),
+                        PetsTable(name='cat', type='cat'),
                     ],  # result
                 )
             ]
@@ -30,7 +30,7 @@ class MockConnectionNoResult:
         self.session.query.side_effect = self.__raise_no_result_found
 
     def __raise_no_result_found(self, *args, **kwargs):
-        raise NoResultFound("No result found")
+        raise NoResultFound('No result found')
 
     def __enter__(self): return self
 
@@ -45,16 +45,16 @@ def test_list_pets():
     mock_connection.session.all.assert_called_once()
     mock_connection.session.filter.assert_not_called()
 
-    assert response[0].name == "dog"
+    assert response[0].name == 'dog'
 
 def test_delete_pets():
     mock_connection = MockConnection()
     repo = PetsRepository(mock_connection)
 
-    repo.delete_pets("petName")
+    repo.delete_pets('petName')
 
     mock_connection.session.query.assert_called_once_with(PetsTable)
-    mock_connection.session.filter.assert_called_once_with(PetsTable.name == "petName")
+    mock_connection.session.filter.assert_called_once_with(PetsTable.name == 'petName')
     mock_connection.session.delete.assert_called_once()
 
 def test_list_pets_not_found():
@@ -73,6 +73,6 @@ def test_delete_pets_error():
     repo = PetsRepository(mock_connection)
 
     with pytest.raises(Exception):
-        repo.delete_pets("petName")
+        repo.delete_pets('petName')
 
     mock_connection.session.rollback.assert_called_once()
