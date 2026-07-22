@@ -12,7 +12,7 @@ class PeopleRepository(PeopleRepositoryInterface):
         first_name: str,
         last_name: str,
         age: int,
-        pet_id: int
+        pet_id: str
     ) -> None:
         with self.__db_connection as database:
             try:
@@ -28,7 +28,7 @@ class PeopleRepository(PeopleRepositoryInterface):
                 database.session.rollback()
                 raise exception
 
-    def get_person(self, person_id: int) -> PeopleTable:
+    def get_person(self, person_id: str) -> PeopleTable:
         with self.__db_connection as database:
             try:
                 person = (
