@@ -12,7 +12,7 @@ class PersonCreatorController:
         pet_id = body['pet_id']
 
         self.__validate_names(first_name, last_name)
-        self.insert_person_in_db(first_name, last_name, age, pet_id)
+        self.__insert_person_in_db(first_name, last_name, age, pet_id)
 
         return body
 
@@ -22,5 +22,5 @@ class PersonCreatorController:
         if non_valid_name.search(first_name) or non_valid_name.search(last_name):
             raise Exception('Invalid name!')
         
-    def insert_person_in_db(self, first_name: str, last_name: str, age: int, pet_id: str):
+    def __insert_person_in_db(self, first_name: str, last_name: str, age: int, pet_id: str):
         self.__people_repository.insert_person(first_name, last_name, age, pet_id)
